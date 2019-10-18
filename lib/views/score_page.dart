@@ -144,12 +144,8 @@ class _ScorePageState extends State<ScorePage> {
                   icon: Icon(Icons.remove),
                   onPressed: () {
                     setState(() {
-                      if(jogador.level > 1){
+                      if((jogador.level > 1) && (jogador.forca > 0)){
                         nomeCampo == "level" ? jogador.level = jogador.removeLevel(jogador) : jogador.forca = jogador.removeForca(jogador);
-                      }else {
-                        if((nomeCampo == "forca") && (jogador.forca > 0)){
-                          jogador.forca = jogador.removeForca(jogador);
-                        }
                       }
                     });
                   },

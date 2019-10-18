@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:munchkin/models/dados_mocados.dart';
+import 'package:munchkin/models/lancar_dado.dart';
 
 
 class ScorePage extends StatefulWidget {
@@ -10,6 +11,30 @@ class ScorePage extends StatefulWidget {
 Jogador jogador = new Jogador("Jogador 1", "M", 1, 0, 3);
 
 class _ScorePageState extends State<ScorePage> {
+
+  void _lancarDado({String title, String message, Function confirm}){
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title ?? ""),
+          content: Text(message ?? ""),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("OK", style: TextStyle(color: Colors.greenAccent[400])),
+              onPressed: (){
+                Navigator.of(context).pop();
+                if(confirm != null) confirm();
+              },
+            ),
+          ],
+        );
+      }
+    );
+  }
+
+
 
  void _showDialog(
   {String title, String message, Function confirm, Function cancel}){
@@ -174,16 +199,33 @@ class _ScorePageState extends State<ScorePage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         backgroundColor: Colors.grey[900],
-        title: Text("Munchkin", style: TextStyle(color: Colors.grey[50])),
+        title: Row(
+          children: <Widget>[
+            Text("Munchkin",style: TextStyle(color: Colors.grey[50])),
+            IconButton(
+            icon: Icon(Icons.edit , color: Colors.grey[50]),
+            onPressed: () {
+             _lancarDado(
+              title: 'Dado lançado',
+              message: 'Você tirou:  ' + getDadoValor()
+            );
+          },
+        )
+          ] 
+        ),
         actions: <Widget>[
         IconButton(
           icon: Icon(Icons.casino , color: Colors.grey[50]),
           onPressed: () {
-            // JOGAR DADOS
+             _lancarDado(
+              title: 'Dado lançado',
+              message: 'Você tirou:  ' + getDadoValor()
+            );
           },
         )
       ],

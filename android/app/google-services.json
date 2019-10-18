@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1077436979995",
+    "firebase_url": "https://munchkin-91c69.firebaseio.com",
+    "project_id": "munchkin-91c69",
+    "storage_bucket": "munchkin-91c69.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077436979995:android:4ca4a41b1f1563bf3b51be",
+        "android_client_info": {
+          "package_name": "com.example.munchkin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1077436979995-l225ffr8ss7pv6c8557tqev17fq94lmp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANuZ9Cc36FZ2urEvgsKI6SPopHLC-2h5Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1077436979995-l225ffr8ss7pv6c8557tqev17fq94lmp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

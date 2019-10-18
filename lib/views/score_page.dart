@@ -98,7 +98,7 @@ class _ScorePageState extends State<ScorePage> {
 
   Widget _scoreActionListItem(int value, String label, String nomeCampo){
     return Padding(
-      padding: EdgeInsets.only(top: 40.0, bottom: 40.0, left: 25.0, right: 25.0),
+      padding: EdgeInsets.only(top: 30.0, bottom: 30.0, left: 25.0, right: 25.0),
       child:Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -175,6 +175,7 @@ class _ScorePageState extends State<ScorePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         backgroundColor: Colors.grey[900],
         title: Text("Munchkin", style: TextStyle(color: Colors.grey[50])),
@@ -187,7 +188,7 @@ class _ScorePageState extends State<ScorePage> {
         )
       ],
       ),
-      body: _scorePage(), // This trailing comma makes auto-formatting nicer for build methods.
+      body: SingleChildScrollView(child:  _scorePage(),), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

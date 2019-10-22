@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:munchkin/models/dados_mocados.dart';
+import 'package:munchkin/models/lancar_dado.dart';
 
 
 class ScorePage extends StatefulWidget {
@@ -10,6 +11,30 @@ class ScorePage extends StatefulWidget {
 Jogador jogador = new Jogador("Jogador 1", "M", 1, 0, 3);
 
 class _ScorePageState extends State<ScorePage> {
+
+  void _lancarDado({String title, String message, Function confirm}){
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title ?? ""),
+          content: Text(message ?? ""),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("OK", style: TextStyle(color: Colors.greenAccent[400])),
+              onPressed: (){
+                Navigator.of(context).pop();
+                if(confirm != null) confirm();
+              },
+            ),
+          ],
+        );
+      }
+    );
+  }
+
+
 
  void _showDialog(
   {String title, String message, Function confirm, Function cancel}){
@@ -98,7 +123,7 @@ class _ScorePageState extends State<ScorePage> {
 
   Widget _scoreActionListItem(int value, String label, String nomeCampo){
     return Padding(
-      padding: EdgeInsets.only(top: 40.0, bottom: 40.0, left: 25.0, right: 25.0),
+      padding: EdgeInsets.only(top: 30.0, bottom: 30.0, left: 25.0, right: 25.0),
       child:Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -119,12 +144,8 @@ class _ScorePageState extends State<ScorePage> {
                   icon: Icon(Icons.remove),
                   onPressed: () {
                     setState(() {
-                      if(jogador.level > 1){
+                      if((jogador.level > 1) && (jogador.forca > 0)){
                         nomeCampo == "level" ? jogador.level = jogador.removeLevel(jogador) : jogador.forca = jogador.removeForca(jogador);
-                      }else {
-                        if((nomeCampo == "forca") && (jogador.forca > 0)){
-                          jogador.forca = jogador.removeForca(jogador);
-                        }
                       }
                     });
                   },
@@ -174,20 +195,29 @@ class _ScorePageState extends State<ScorePage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         backgroundColor: Colors.grey[900],
-        title: Text("Munchkin", style: TextStyle(color: Colors.grey[50])),
+        title: Row(
+          children: <Widget>[
+            Text("Munchkin",style: TextStyle(color: Colors.grey[50])),
+          ] 
+        ),
         actions: <Widget>[
         IconButton(
           icon: Icon(Icons.casino , color: Colors.grey[50]),
           onPressed: () {
-            // JOGAR DADOS
+             _lancarDado(
+              title: 'Dado lançado',
+              message: 'Você tirou:  ' + getDadoValor()
+            );
           },
         )
       ],
       ),
-      body: _scorePage(), // This trailing comma makes auto-formatting nicer for build methods.
+      body: SingleChildScrollView(child:  _scorePage(),), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

@@ -203,15 +203,6 @@ class _ScorePageState extends State<ScorePage> {
         title: Row(
           children: <Widget>[
             Text("Munchkin",style: TextStyle(color: Colors.grey[50])),
-            IconButton(
-            icon: Icon(Icons.edit , color: Colors.grey[50]),
-            onPressed: () {
-             _lancarDado(
-              title: 'Dado lançado',
-              message: 'Você tirou:  ' + getDadoValor()
-            );
-          },
-        )
           ] 
         ),
         actions: <Widget>[

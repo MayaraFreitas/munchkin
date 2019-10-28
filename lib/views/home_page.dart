@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Contador de Munchkin'),),
-      floatingActionButton: FloatingActionButton(child: Icon(Icons.add),),
+      floatingActionButton: FloatingActionButton(child: Icon(Icons.add), onPressed: () {print('teste1');},),
       body: _buildBodyRoom(),
     );
   }
@@ -30,41 +30,34 @@ class _HomePageState extends State<HomePage> {
      else
      {
        return ListView.separated(
+         itemCount: _roomList.length,
          separatorBuilder: (BuildContext context, int index) => Divider(),
          itemBuilder: (context, index) => Padding(
-        padding:EdgeInsets.only(top: 30.0, bottom: 30.0, left: 25.0, right: 25.0),
-        child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          _buildRoomList()
-        ],
+          padding:EdgeInsets.only(top: 30.0, bottom: 30.0, left: 25.0, right: 25.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+            _buildRoomList()
+            ],
+          ),
         ),
-      ),
        );
      }
   }
 
-  Widget _buildRoomItem (int value, String label, String nomeCampo)
-  {
-    return Row(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(right: 20),
-          child: Text(value.toString(), style: TextStyle(fontSize: 36)),
-        ),
-        Text(label, style: TextStyle(fontSize: 20, color: Colors.grey[400])),
-      ],
-    );
-  }
-
   Widget _buildRoomList()
   {
-    return Column(
-      children: <Widget>[
-        _buildRoomItem(2, 'teste', 'tes'),
-        Divider(),
-        _buildRoomItem(3, 'teste1', 'tes1'),
-      ],
-    );
+      List<Widget> list = new List<Widget>();
+      for (var i = 0; i < _roomList.length; i++) 
+      {
+        list.add(new Padding(
+          padding: EdgeInsets.only(right: 20),
+          child: Text('1', style: TextStyle(fontSize: 36)),
+        ));
+        list.add(new Text(_roomList[i], style: TextStyle(fontSize: 20, color: Colors.grey[400])));  
+        list.add(Divider());        
+      }
+      return new Row(children: list);
   }
 }

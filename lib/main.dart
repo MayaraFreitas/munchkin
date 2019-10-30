@@ -13,7 +13,7 @@ void main() {
       theme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.greenAccent[400],
-        accentColor: Colors.grey[900],
+        accentColor: Colors.greenAccent[400],
         primaryTextTheme: TextTheme(
           title: TextStyle(
             color: Colors.grey[50]

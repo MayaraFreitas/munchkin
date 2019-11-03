@@ -34,8 +34,6 @@ class _ScorePageState extends State<ScorePage> {
     );
   }
 
-
-
  void _showDialog(
   {String title, String message, Function confirm, Function cancel}){
     showDialog(

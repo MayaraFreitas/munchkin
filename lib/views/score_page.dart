@@ -197,7 +197,6 @@ class _ScorePageState extends State<ScorePage> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        backgroundColor: Colors.grey[900],
         title: Row(
           children: <Widget>[
             Text("Munchkin",style: TextStyle(color: Colors.grey[50])),

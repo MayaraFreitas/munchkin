@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(right: 25, left:25, top: 30, bottom: 30),
               child: Icon(Icons.signal_wifi_off, color: Colors.greenAccent[400]),
             ),
-            Text("Jogar offline", style: TextStyle(fontSize: 20, color: Colors.greenAccent[400])),
+            Text("Jogar off-line", style: TextStyle(fontSize: 20, color: Colors.greenAccent[400])),
             Padding(padding: EdgeInsets.only(bottom: 30),
             child: Divider(),
             ),

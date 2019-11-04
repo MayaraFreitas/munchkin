@@ -34,8 +34,6 @@ class _ScorePageState extends State<ScorePage> {
     );
   }
 
-
-
  void _showDialog(
   {String title, String message, Function confirm, Function cancel}){
     showDialog(
@@ -75,8 +73,8 @@ class _ScorePageState extends State<ScorePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(jogador.getScoreTotal(jogador).toString(), style: TextStyle(fontSize: 90.0, letterSpacing: 12.0)),
-                Text("Força total"),
+                Text(jogador.getScoreTotal(jogador).toString(), style: TextStyle(fontSize: 90.0, letterSpacing: 12.0, color: Colors.grey[50])),
+                Text("Força total", style: TextStyle(color: Colors.grey[50])),
                 Container(
                     margin: EdgeInsets.only(top: 20.0),
                     child: FlatButton(
@@ -199,10 +197,9 @@ class _ScorePageState extends State<ScorePage> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        backgroundColor: Colors.grey[900],
         title: Row(
           children: <Widget>[
-            Text("Munchkin",style: TextStyle(color: Colors.grey[50])),
+            Text("Jogo off-line"),
           ] 
         ),
         actions: <Widget>[

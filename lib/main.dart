@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
           headline: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
           title: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w500, color: Colors.white70),
           subtitle: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white54),
+          body2: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400, color: Colors.greenAccent[400]),
           body1: TextStyle(fontSize: 14.0, fontFamily: 'Hind', color: Colors.white54),
         ),
       ),

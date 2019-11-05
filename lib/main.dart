@@ -1,12 +1,8 @@
-<<<<<<< HEAD
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:munchkin/views/pocRoom.dart';
-=======
 import 'package:munchkin/views/home_page.dart';
 import 'package:munchkin/views/score_page.dart';
-import 'package:flutter/material.dart';
->>>>>>> master
 
 void main() => runApp(MyApp());
 

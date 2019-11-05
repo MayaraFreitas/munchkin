@@ -78,11 +78,10 @@ class _HomePageState extends State<HomePage> {
       Divider(),
       Row(children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(right: 25, left:25, top: 30, bottom: 15),
+          padding: EdgeInsets.only(left:25, top: 50, bottom: 15),
           child: Text('Salas online', style: Theme.of(context).textTheme.body1),
         )
       ]),
-      Divider(),
       Expanded(flex: 1, child: _buildBodyRoom(),),    
     ],);
   }
@@ -133,12 +132,9 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(right: 25, left:25, top: 30, bottom: 30),
-              child: Icon(Icons.signal_wifi_off, color: Colors.greenAccent[400]),
+              child: Icon(Icons.signal_wifi_off),
             ),
-            Text("Jogar off-line", style: TextStyle(fontSize: 20, color: Colors.greenAccent[400])),
-            Padding(padding: EdgeInsets.only(bottom: 30),
-            child: Divider(),
-            ),
+            Text("Jogar off-line", style: Theme.of(context).textTheme.subtitle),
           ],
         )
       ),

@@ -1,4 +1,5 @@
 var jogadores = ["jogador 1", "jogador 2", "jogador 3", "jogador 4", "jogador 5"];
+List<String> roomList = ['elfo', 'goblin', 'human'];
 
 class Jogador {
   var nome;

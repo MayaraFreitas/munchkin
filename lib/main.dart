@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:munchkin/views/pocRoom.dart';
 import 'package:munchkin/views/home_page.dart';
 import 'package:munchkin/views/score_page.dart';
-import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
@@ -30,7 +32,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
-        '/score': (context) => ScorePage()
+        '/score': (context) => ScorePage(),
+        '/pcRoom': (context) => PocRoom()
       },
     );
   }

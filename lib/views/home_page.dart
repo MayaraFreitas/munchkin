@@ -14,7 +14,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Contador de Munchkin'),),
-      floatingActionButton: FloatingActionButton(child: Icon(Icons.add), onPressed: _dialogFloat,),
+      floatingActionButton: FloatingActionButton(child: Icon(Icons.add), onPressed: () {
+        return Navigator.pushNamed(context, '/pcRoom');
+      },),
       body: _buildScreen(),
     );
   }

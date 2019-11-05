@@ -2,13 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:munchkin/models/room.dart';
+import 'package:munchkin/services/data_base.dart';
 
-class MayTest extends StatefulWidget {
+class PocRoom extends StatefulWidget {
   @override
-  _MayTestState createState() => _MayTestState();
+  _PocRoomState createState() => _PocRoomState();
 }
 
-class _MayTestState extends State<MayTest> {
+class _PocRoomState extends State<PocRoom> {
 
   
   @override
@@ -31,7 +32,7 @@ class _MayTestState extends State<MayTest> {
     return Center(
         child: Container(
           child: Center(
-            child: _getAllRooms(),
+            child: _getAllRooms(":)"),
         )
       )
     );
@@ -39,15 +40,17 @@ class _MayTestState extends State<MayTest> {
 
   FloatingActionButton _buildFloatButton(){
     return FloatingActionButton(
-        onPressed: () { _createRoom(new Room( name: "Nomezin :)", password: "senha")); },
+        onPressed: () { DataBase.createRoom(new Room( name: "Mutiquinho3S", password: "senha")); }, // Ao pressionar o botão vai criar a sala
+        // O método createRoom() se der sucesso retorna null, se der erro retorna uma msg!
         child: Icon(Icons.add),
         backgroundColor: Colors.purple,
       );
   }
 
-  StreamBuilder<QuerySnapshot> _getAllRooms(){
+  // Exemplo de método para buscar salas
+  StreamBuilder<QuerySnapshot> _getAllRooms(String text){
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('rooms').snapshots(),
+      stream: DataBase.getAllRooms(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError){
           return new Text('Error: ${snapshot.error}');
@@ -58,6 +61,12 @@ class _MayTestState extends State<MayTest> {
         else{
           return new ListView(
               children: snapshot.data.documents.map((DocumentSnapshot document) {
+
+                final room = Room.fromMap(document.data);
+                if (!room.name.toUpperCase().contains(text.toUpperCase())) // Caso o nome da sala não contenha o testo, retornar vazio (TEMPORÁRIO ATÉ APLICAR CONSULTA COM LIKE)
+                  return Container();
+
+                  //Exemplo de construção de card com nome e senha para cada sala
                  return Card(
                    child: ListTile(
                      title: new Text('Nome: ' + document['name']),
@@ -70,25 +79,4 @@ class _MayTestState extends State<MayTest> {
       },
     );
   }
-
-  static Future<bool> checkRoomExist(String roomId) async{
-    try{
-      bool exist = false;
-      await Firestore.instance.document('rooms/$roomId').get().then((document){
-        exist = document.exists;
-      });
-      return exist;
-    }catch(ex){
-      return false;
-    }
-  }
-  
-  static Future<void> _createRoom(Room room) async{
-    checkRoomExist(room.name).then((value){
-      if(!value){
-        Firestore.instance.document("rooms/${room.name}").setData(room.toMap());
-      }
-    });
-  }
-  
 }

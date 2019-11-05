@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:munchkin/views/mayTest.dart';
-import 'package:munchkin/views/score_page.dart';
+import 'package:munchkin/views/pocRoom.dart';
 
 void main() {
 
@@ -9,7 +8,7 @@ void main() {
     .then((_) {
       runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MayTest(),
+      home: PocRoom(),
       theme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.greenAccent[400],

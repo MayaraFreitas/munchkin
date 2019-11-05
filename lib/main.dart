@@ -12,7 +12,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: PocRoom(),
       title: 'Munchkin',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.grey[900],
@@ -33,7 +32,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
-        '/score': (context) => ScorePage()
+        '/score': (context) => ScorePage(),
+        '/pcRoom': (context) => PocRoom()
       },
     );
   }

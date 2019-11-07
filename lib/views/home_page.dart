@@ -1,6 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:munchkin/models/dados_mocados.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:munchkin/models/room.dart';
+import 'package:munchkin/services/data_base.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -9,19 +14,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _loading = true;
+  String textFieldValue = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Contador de Munchkin'),),
       floatingActionButton: FloatingActionButton(child: Icon(Icons.add), onPressed: () {
-        return Navigator.pushNamed(context, '/pcRoom');
+        // return Navigator.pushNamed(context, '/pcRoom');
+        _joinRoom();
       },),
       body: _buildScreen(),
     );
   }
 
-  void _dialogFloat()
+  void _joinRoom()
   {
     final _nameController = TextEditingController();
     showDialog(
@@ -30,10 +37,10 @@ class _HomePageState extends State<HomePage> {
       builder: (BuildContext context)
       {
         return AlertDialog(
-          title: Text('Como devemos te chamar ?'),
+          title: Text('Dê um nome para sua sala'),
           content: TextFormField(
             keyboardType: TextInputType.text,
-            decoration: InputDecoration(labelText: 'Digite seu nome'),
+            decoration: InputDecoration(labelText: 'Digite o nome da sala'),
             controller: _nameController,
             autofocus: true,
             validator: (text)
@@ -50,10 +57,13 @@ class _HomePageState extends State<HomePage> {
               }
             ),
             FlatButton(
-              child: Text("Entrar"),
+              child: Text("Confirmar"),
               onPressed: ()
               {
-                Navigator.of(context).pop();
+                if(_nameController.text != ''){
+                  DataBase.createRoom(new Room( name: _nameController.text, password: "senha")); 
+                  Navigator.of(context).pop();
+                }
               },
             )
           ],
@@ -64,14 +74,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildScreen(){
+    
     return Column(children: <Widget>[
       Expanded(flex: 0, 
         child: Padding(
           padding: EdgeInsets.only(right: 25, left:25, top: 15, bottom: 30),
           child: TextField(
-          decoration: InputDecoration(
-            labelText: 'Buscar sala',
-            suffixIcon: Icon(Icons.search)   
+            onChanged: (text) {
+                print(text);
+                return textFieldValue = text;
+              },
+            decoration: InputDecoration(
+              labelText: 'Buscar sala',
+              suffixIcon: Icon(Icons.search)   
             ),
           ),
         )
@@ -81,32 +96,59 @@ class _HomePageState extends State<HomePage> {
       Row(children: <Widget>[
         Padding(
           padding: EdgeInsets.only(left:25, top: 50, bottom: 15),
-          child: Text('Salas online', style: Theme.of(context).textTheme.body1),
+          child: Text('Salas on-line', style: Theme.of(context).textTheme.body1),
         )
       ]),
-      Expanded(flex: 1, child: _buildBodyRoom(),),    
+      Expanded(flex: 1, child: _getAllRooms(textFieldValue),),    
     ],);
   }
 
-  Widget _buildBodyRoom()
-  {
-     if(roomList.isEmpty)
-     {
-       return Center(
-         child: _loading ? CircularProgressIndicator() : Text('Sem salas'),
-       );
-     }
-     else
-     {
-       return ListView.separated(
-         separatorBuilder: (BuildContext context, int index) => Divider(),
-         itemCount: roomList.length,
-         itemBuilder: _buildRoomList
-       );
-     }
+  StreamBuilder<QuerySnapshot> _getAllRooms(String text){
+    return StreamBuilder<QuerySnapshot>(
+      stream: DataBase.getAllRooms(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError){
+          return new Text('Error: ${snapshot.error}');
+        }
+        else if(snapshot.connectionState == ConnectionState.waiting){
+          return new Text('Loading...');
+        }
+        else{
+          return new ListView(
+              children: snapshot.data.documents.map((DocumentSnapshot document) {
+
+                final room = Room.fromMap(document.data);
+                if (!room.name.toUpperCase().contains(text.toUpperCase())) // Caso o nome da sala não contenha o testo, retornar vazio (TEMPORÁRIO ATÉ APLICAR CONSULTA COM LIKE)
+                  return Container();
+
+                  //Exemplo de construção de card com nome e senha para cada sala
+                 return _buildRoomList(document['name'], context);
+              }).toList(),
+            );
+        }
+      },
+    );
   }
 
-  Widget _buildRoomList(BuildContext context, int index)
+  // Widget _buildBodyRoom()
+  // {
+  //    if(roomList.isEmpty)
+  //    {
+  //      return Center(
+  //        child: _loading ? CircularProgressIndicator() : Text('Sem salas'),
+  //      );
+  //    }
+  //    else
+  //    {
+  //      return ListView.separated(
+  //        separatorBuilder: (BuildContext context, int index) => Divider(),
+  //        itemCount: roomList.length,
+  //        itemBuilder: _buildRoomList
+  //      );
+  //    }
+  // }
+
+  Widget _buildRoomList(name, BuildContext context)
   {
       return  InkWell(
         onTap: (){}, 
@@ -116,7 +158,7 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.only(right: 25, left:25, top: 30, bottom: 30),
             child: Icon(Icons.group),
           ),
-          Text(roomList[index], style: Theme.of(context).textTheme.subtitle),
+          Text(name, style: Theme.of(context).textTheme.subtitle),
         ],
       ),);
   }

@@ -14,10 +14,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Munchkin',
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.grey[900],
+        scaffoldBackgroundColor:  Color(0xff2A1836),
         brightness: Brightness.dark,
         primarySwatch: Colors.grey,
-        primaryColor: Colors.grey[900],
+        primaryColor: Color(0xff2A1836),
         accentColor: Colors.greenAccent[400],
         
 

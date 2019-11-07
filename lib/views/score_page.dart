@@ -18,6 +18,7 @@ class _ScorePageState extends State<ScorePage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          // backgroundColor: Color(0xff352440),
           title: Text(title ?? ""),
           content: Text(message ?? ""),
           actions: <Widget>[
@@ -41,6 +42,7 @@ class _ScorePageState extends State<ScorePage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          // backgroundColor: Color(0xff352440),
           title: Text(title ?? ""),
           content: Text(message ?? ""),
           actions: <Widget>[
@@ -103,11 +105,13 @@ class _ScorePageState extends State<ScorePage> {
               ],    
             )
         ),
-        color: Colors.redAccent[400],
+        color: Color(0xff2DBDB6),
         height: 300.0,
       ),
     );
   }
+
+
 
 
   Widget _scorePage(){

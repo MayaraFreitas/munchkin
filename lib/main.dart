@@ -14,19 +14,20 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Munchkin',
       theme: ThemeData(
-        scaffoldBackgroundColor:  Color(0xff2A1836),
+        scaffoldBackgroundColor:  Colors.grey[900],
         brightness: Brightness.dark,
         primarySwatch: Colors.grey,
-        primaryColor: Color(0xff2A1836),
+        primaryColor: Colors.grey[900],
         accentColor: Colors.greenAccent[400],
+        splashColor: Colors.greenAccent[700],
         
 
         textTheme: TextTheme(
           headline: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
-          title: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w500, color: Colors.white70),
-          subtitle: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white54),
+          title: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w500, color: Colors.white),
+          subtitle: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white70),
           body2: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400, color: Colors.greenAccent[400]),
-          body1: TextStyle(fontSize: 14.0, fontFamily: 'Hind', color: Colors.white54),
+          body1: TextStyle(fontSize: 14.0, fontFamily: 'Hind', color: Colors.white60),
         ),
       ),
       initialRoute: '/',

@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
       builder: (BuildContext context)
       {
         return AlertDialog(
+          // backgroundColor: Color(0xff352440),
           title: Text('Dê um nome para sua sala'),
           content: TextFormField(
             keyboardType: TextInputType.text,
@@ -82,6 +83,9 @@ class _HomePageState extends State<HomePage> {
           child: TextField(
             onChanged: (text) {
                 print(text);
+                setState(() {
+                 text; 
+                });
                 return textFieldValue = text;
               },
             decoration: InputDecoration(
@@ -111,7 +115,7 @@ class _HomePageState extends State<HomePage> {
           return new Text('Error: ${snapshot.error}');
         }
         else if(snapshot.connectionState == ConnectionState.waiting){
-          return new Text('Loading...');
+          return  CircularProgressIndicator();
         }
         else{
           return new ListView(

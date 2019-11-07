@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(title: Text('Contador de Munchkin'),),
       floatingActionButton: FloatingActionButton(child: Icon(Icons.add), onPressed: () {
-        return Navigator.pushNamed(context, '/pcRoom');
+        return Navigator.pushNamed(context, '/pcPlayer');
       },),
       body: _buildScreen(),
     );

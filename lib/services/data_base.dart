@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:munchkin/models/Player.dart';
 import 'package:munchkin/models/room.dart';
 
 class DataBase{
@@ -29,7 +30,33 @@ class DataBase{
   }
 
   static Stream<QuerySnapshot> getAllRooms(){
-    return Firestore.instance.collection('rooms')
-      .snapshots();
+    return Firestore.instance.collection('rooms').snapshots();
+  }
+
+  static Future<bool> _checkPlayerExist(String playerId) async{
+    try{
+      bool exist = false;
+      await Firestore.instance.document('players/$playerId').get().then((document){
+        exist = document.exists;
+      });
+      return exist;
+    }catch(ex){
+      return false;
+    }
+  }
+
+  static Future<String> createPlayer(Player player) async{
+    _checkPlayerExist(player.name).then((value){
+      if(!value){
+        Firestore.instance.document("players/${player.name}").setData(player.toMap());
+        return null;
+      }else{
+        return "Ops! Já existe um player chamado ${player.name}";
+      }
+    });
+  }
+
+  static Stream<QuerySnapshot> getAllPlayers(){
+    return Firestore.instance.collection('players').snapshots();
   }
 }

@@ -95,14 +95,14 @@ class _HomePageState extends State<HomePage> {
           ),
         )
       ),
-      Expanded(flex: 0, child: _buildOfflineRoom(context)),
-      Divider(),
-      Row(children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(left:25, top: 50, bottom: 15),
-          child: Text('Salas on-line', style: Theme.of(context).textTheme.body1),
-        )
-      ]),
+      // Expanded(flex: 0, child: _buildOfflineRoom(context)),
+      // Divider(),
+      // Row(children: <Widget>[
+      //   Padding(
+      //     padding: EdgeInsets.only(left:25, top: 50, bottom: 15),
+      //     child: Text('Salas on-line', style: Theme.of(context).textTheme.body1),
+      //   )
+      // ]),
       Expanded(flex: 1, child: _getAllRooms(textFieldValue),),    
     ],);
   }
@@ -167,25 +167,25 @@ class _HomePageState extends State<HomePage> {
       ),);
   }
 
-  Widget _buildOfflineRoom(context){
-    return  InkWell(
-      onTap: (){
-        // print('||||||||||||||||||||||||||||||||||||||||||||||||||||||||| ------> Score Page');
-        // print(context);
-        return Navigator.pushNamed(context, '/score');
-      }, 
-      child: Container(
-        // color: Colors.teal[700],
-        child: Row(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(right: 25, left:25, top: 30, bottom: 30),
-              child: Icon(Icons.signal_wifi_off),
-            ),
-            Text("Jogar off-line", style: Theme.of(context).textTheme.subtitle),
-          ],
-        )
-      ),
-    ); 
-  }
+  // Widget _buildOfflineRoom(context){
+  //   return  InkWell(
+  //     onTap: (){
+  //       // print('||||||||||||||||||||||||||||||||||||||||||||||||||||||||| ------> Score Page');
+  //       // print(context);
+  //       return Navigator.pushNamed(context, '/score');
+  //     }, 
+  //     child: Container(
+  //       // color: Colors.teal[700],
+  //       child: Row(
+  //         children: <Widget>[
+  //           Padding(
+  //             padding: EdgeInsets.only(right: 25, left:25, top: 30, bottom: 30),
+  //             child: Icon(Icons.signal_wifi_off),
+  //           ),
+  //           Text("Jogar off-line", style: Theme.of(context).textTheme.subtitle),
+  //         ],
+  //       )
+  //     ),
+  //   ); 
+  // }
 }

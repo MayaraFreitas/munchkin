@@ -19,7 +19,6 @@ class _SetupGameState extends State<SetupGame> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Contador de Munchkin'),),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -27,11 +26,11 @@ class _SetupGameState extends State<SetupGame> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(bottom: 12),
-              child: _buildCard('Jogar on-line', true, '/home')
+              child: _buildCard('Jogar on-line', true, '/home', Colors.green)
             ),
             Padding(
               padding: EdgeInsets.only(top: 12),
-              child: _buildCard('Jogar off-line', false, '/score')
+              child: _buildCard('Jogar off-line', false, '/score', Colors.grey[800])
             )
           ],
         ),
@@ -39,10 +38,12 @@ class _SetupGameState extends State<SetupGame> {
     );
   }
 
-  Widget _buildCard(title, online, route) {
+  Widget _buildCard(title, online, route, color) {
     return Center(
       child:
         Card(
+        color: color,
+        borderOnForeground: true,
         child: InkWell(
         onTap: (){
           Navigator.pushNamed(context, route);

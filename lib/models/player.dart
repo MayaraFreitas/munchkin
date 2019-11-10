@@ -5,6 +5,7 @@ class Player{
   int level;
   String name;
   String sexo;
+  String roomId = "A";
 
   Player({
     this.forca,
@@ -14,8 +15,8 @@ class Player{
   });
 
   Map<String, dynamic> toMap() =>{
-    "forca": forca.toString(),
-    "level": level.toString(),
+    "forca": forca.toInt(),
+    "level": level.toInt(),
     "name": name.toString(),
     "sexo": sexo.toString(),
   };

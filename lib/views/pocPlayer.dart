@@ -40,11 +40,11 @@ class _PocPlayerState extends State<PocPlayer> {
 
   FloatingActionButton _buildFloatButton(){
     return FloatingActionButton(
-        onPressed: () { DataBase.createPlayer(
+        onPressed: () { DataBase.updatePlayer(
           new Player( 
             forca: 1, 
             level: 1, 
-            name: "Art3mis", 
+            name: "Leozin", 
             sexo: "F"
           )); 
         }, // Ao pressionar o botão vai criar a sala
@@ -57,7 +57,7 @@ class _PocPlayerState extends State<PocPlayer> {
   // Exemplo de método para buscar salas
   StreamBuilder<QuerySnapshot> _getAllPlayers(String text){
     return StreamBuilder<QuerySnapshot>(
-      stream: DataBase.getAllPlayers(),
+      stream: DataBase.getPlayers("A"),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError){
           return new Text('Error: ${snapshot.error}');

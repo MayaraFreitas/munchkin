@@ -29,14 +29,41 @@ class DataBase{
     });
   }
 
+  static Future<String> updateRoom(Room room) async{
+    
+    // Verificando se já existe uma sala com o mesmo nome (id)
+    _checkRoomExist(room.name).then((value){
+      if(value){
+        Firestore.instance.document("rooms/${room.name}").setData(room.toMap());
+        return null;
+      }else{
+        return "Ops! Já existe uma sala chamada ${room.name}";
+      }
+    });
+  }
+
+  static Future<String> deleteRoom(Room room) async{
+    
+    // Verificando se já existe uma sala com o mesmo nome (id)
+    _checkRoomExist(room.name).then((value){
+      if(value){
+        Firestore.instance.document("rooms/${room.name}").delete();
+        return null;
+      }else{
+        return "Ops! Já existe uma sala chamada ${room.name}";
+      }
+    });
+  }
+
   static Stream<QuerySnapshot> getAllRooms(){
     return Firestore.instance.collection('rooms').snapshots();
   }
 
-  static Future<bool> _checkPlayerExist(String playerId) async{
+
+  static Future<bool> _checkPlayerExist(Player player) async{
     try{
       bool exist = false;
-      await Firestore.instance.document('players/$playerId').get().then((document){
+      await Firestore.instance.document('rooms/${player.roomId}/players/${player.name}/').get().then((document){
         exist = document.exists;
       });
       return exist;
@@ -46,9 +73,11 @@ class DataBase{
   }
 
   static Future<String> createPlayer(Player player) async{
-    _checkPlayerExist(player.name).then((value){
+    _checkPlayerExist(player).then((value){
       if(!value){
-        Firestore.instance.document("players/${player.name}").setData(player.toMap());
+        
+        var documentReference = Firestore.instance.document("rooms/${player.roomId}/players/${player.name}")
+        .setData(player.toMap());
         return null;
       }else{
         return "Ops! Já existe um player chamado ${player.name}";
@@ -56,7 +85,32 @@ class DataBase{
     });
   }
 
-  static Stream<QuerySnapshot> getAllPlayers(){
-    return Firestore.instance.collection('players').snapshots();
+  static Future<String> updatePlayer(Player player) async{
+    _checkPlayerExist(player).then((value){
+      if(value){
+        
+        var documentReference = Firestore.instance.document("rooms/${player.roomId}/players/${player.name}")
+         .setData(player.toMap());
+        return null;
+      }else{
+        return "Ops! Não existe um player chamado ${player.name}";
+      }
+    });
+  }
+
+  static Future<String> deletePlayer(Player player) async{
+    _checkPlayerExist(player).then((value){
+      if(value){
+        
+        var documentReference = Firestore.instance.document("rooms/${player.roomId}/players/${player.name}").delete();
+        return null;
+      }else{
+        return "Ops! Não existe um player chamado ${player.name}";
+      }
+    });
+  }
+
+  static Stream<QuerySnapshot> getPlayers(String roomId){
+    return Firestore.instance.document("rooms/${roomId}").collection('players').snapshots();
   }
 }

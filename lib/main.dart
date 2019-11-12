@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:munchkin/views/pocPlayer.dart';
 import 'package:munchkin/views/pocRoom.dart';
 import 'package:munchkin/views/home_page.dart';
 import 'package:munchkin/views/score_page.dart';
@@ -36,7 +37,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => SetupGame(),
         '/home': (context) => HomePage(),
         '/score': (context) => ScorePage(),
-        '/pcRoom': (context) => PocRoom()
+        '/pcRoom': (context) => PocRoom(),
+        '/pcPlayer': (context) => PocPlayer()
       },
     );
   }

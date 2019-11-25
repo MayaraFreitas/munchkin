@@ -7,8 +7,9 @@ import 'package:munchkin/services/data_base.dart';
 
 class PlayerRoom extends StatefulWidget {
   final String roomId;
+  final Player player;
 
-  const PlayerRoom({Key key, this.roomId}) : super(key: key);
+  const PlayerRoom({Key key, this.roomId, this.player}) : super(key: key);
 
   @override
   _PlayerRoomState createState() => _PlayerRoomState();
@@ -20,7 +21,16 @@ class _PlayerRoomState extends State<PlayerRoom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.roomId),),
+      appBar: AppBar(title: Text(widget.roomId),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.exit_to_app , color: Colors.grey[50]),
+          onPressed: () {
+            DataBase.deletePlayer(widget.player);
+            Navigator.pushNamed(context, '/home');
+          },
+        )
+      ],),
       body: _buildPlayerList(),
     );
   }

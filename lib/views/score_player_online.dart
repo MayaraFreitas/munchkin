@@ -116,7 +116,7 @@ class _ScorePlayerOnlineState extends State<ScorePlayerOnline> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PlayerRoom(roomId: widget.roomId),
+                            builder: (context) => PlayerRoom(roomId: widget.roomId, player: widget.player,),
                           ),
                         );
                       },
@@ -180,6 +180,9 @@ class _ScorePlayerOnlineState extends State<ScorePlayerOnline> {
                   setState(() {
                     if(widget.player.level < 10){
                       nomeCampo == "level" ? widget.player.level += 1 : widget.player.forca += 1;
+                      DataBase.updatePlayer(widget.player);
+                      // name: widget.player.name, sexo: widget.player.sexo, level: widget.player.level, level: widget.player.forca
+                      print(widget.player);
                     }
                     if(widget.player.level >= 10){
                       _showDialog(

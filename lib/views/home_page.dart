@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:munchkin/models/room.dart';
 import 'package:munchkin/services/data_base.dart';
+import 'package:munchkin/views/paginaTeste.dart';
 import 'package:munchkin/views/player_room.dart';
 import 'package:munchkin/views/score_player_online.dart';
 
@@ -119,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ScorePlayerOnline(roomId: nomeSala, playerName: _nameController.text),
+                      builder: (context) => ScorePlayerOnline(roomId: nomeSala, player: new Player(name: _nameController.text, sexo: 'F', level: 1, forca: 0)),
                     ),
                   );
                   print(nomeSala);

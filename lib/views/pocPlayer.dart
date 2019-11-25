@@ -70,7 +70,7 @@ class _PocPlayerState extends State<PocPlayer> {
               children: snapshot.data.documents.map((DocumentSnapshot document) {
 
                 final player  = Player.fromMap(document.data);
-                if (!player.name.toUpperCase().contains(text.toUpperCase())) // Caso o nome da sala não contenha o testo, retornar vazio (TEMPORÁRIO ATÉ APLICAR CONSULTA COM LIKE)
+                if (!player.name.toUpperCase().contains(text.toUpperCase())) // Caso o nome da sala não contenha o texto, retornar vazio (TEMPORÁRIO ATÉ APLICAR CONSULTA COM LIKE)
                   return Container();
 
                   //Exemplo de construção de card com nome e senha para cada sala

@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:munchkin/models/Player.dart';
 import 'package:munchkin/models/dados_mocados.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:munchkin/models/room.dart';
 import 'package:munchkin/services/data_base.dart';
+import 'package:munchkin/views/player_room.dart';
+import 'package:munchkin/views/score_player_online.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -22,13 +25,13 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(title: Text('Contador de Munchkin'),),
       floatingActionButton: FloatingActionButton(child: Icon(Icons.add), onPressed: () {
         // return Navigator.pushNamed(context, '/pcRoom');
-        _joinRoom();
+        _createRoom();
       },),
       body: _buildScreen(),
     );
   }
 
-  void _joinRoom()
+  void _createRoom()
   {
     final _nameController = TextEditingController();
     showDialog(
@@ -62,7 +65,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: ()
               {
                 if(_nameController.text != ''){
-                  DataBase.createRoom(new Room( name: _nameController.text, password: "senha")); 
+                  DataBase.createRoom(new Room( name: _nameController.text, active: false));
                   Navigator.of(context).pop();
                 }
               },
@@ -73,6 +76,64 @@ class _HomePageState extends State<HomePage> {
 
     );
   }
+
+
+  void _joinRoom(String nomeSala)
+  {
+    final _nameController = TextEditingController();
+    Player _player = new Player();
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context)
+      {
+        return AlertDialog(
+          // backgroundColor: Color(0xff352440),
+          title: Text('Como você quer ser chamado?'),
+          content: TextFormField(
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(labelText: 'Digite seu nome'),
+            controller: _nameController,
+            autofocus: true,
+            validator: (text)
+            {
+              return text.isEmpty ? "Insira o nome" : null;
+            }
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Cancelar"),
+              onPressed: ()
+              {
+                Navigator.of(context).pop();
+              }
+            ),
+            FlatButton(
+              child: Text("Confirmar"),
+              onPressed: ()
+              {
+                if(_nameController.text != ''){
+                  _player.startPlayer(_nameController.text, nomeSala);
+                  DataBase.createPlayer(_player); 
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ScorePlayerOnline(roomId: nomeSala, playerName: _nameController.text),
+                    ),
+                  );
+                  print(nomeSala);
+                 
+                }
+              },
+            )
+          ],
+        );
+      }
+
+    );
+  }
+
 
   Widget _buildScreen(){
     
@@ -129,7 +190,9 @@ class _HomePageState extends State<HomePage> {
   Widget _buildRoomList(name, BuildContext context)
   {
       return  InkWell(
-        onTap: (){}, 
+        onTap: (){
+          _joinRoom(name);
+        }, 
         child: new Row(
         children: <Widget>[
           Padding(

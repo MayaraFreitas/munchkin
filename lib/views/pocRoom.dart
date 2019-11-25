@@ -40,7 +40,7 @@ class _PocRoomState extends State<PocRoom> {
 
   FloatingActionButton _buildFloatButton(){
     return FloatingActionButton(
-        onPressed: () { DataBase.createRoom(new Room( name: "Mutiquinho3S", password: "senha")); }, // Ao pressionar o botão vai criar a sala
+        onPressed: () { DataBase.createRoom(new Room( name: "Mutiquinho3S")); }, // Ao pressionar o botão vai criar a sala
         // O método createRoom() se der sucesso retorna null, se der erro retorna uma msg!
         child: Icon(Icons.add),
         backgroundColor: Colors.purple,

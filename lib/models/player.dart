@@ -5,7 +5,7 @@ class Player{
   int level;
   String name;
   String sexo;
-  String roomId = "A";
+  String roomId;
 
   Player({
     this.forca,
@@ -20,6 +20,14 @@ class Player{
     "name": name.toString(),
     "sexo": sexo.toString(),
   };
+
+  startPlayer(String name, String sala){
+    forca = 0;
+    level = 1;
+    sexo = 'F';
+    this.name = name;
+    this.roomId = sala;
+  }
 
   factory Player.fromJson(String str) => Player.fromMap(json.decode(str));
 

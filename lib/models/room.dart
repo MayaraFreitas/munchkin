@@ -2,22 +2,22 @@ import 'dart:convert';
 
 class Room{
   String name;
-  String password;
+  bool active;
 
   Room({
     this.name,
-    this.password
+    this.active
   });
 
   Map<String, dynamic> toMap() =>{
     "name": name,
-    "password": password
+    "active": active
   };
 
   factory Room.fromJson(String str) => Room.fromMap(json.decode(str));
 
   factory Room.fromMap(Map<String,dynamic> json) => Room(
     name: json["name"],
-    password: json["password"]
+    active: json["active"]
   );
 }

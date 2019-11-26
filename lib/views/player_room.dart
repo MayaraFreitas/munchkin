@@ -26,7 +26,18 @@ class _PlayerRoomState extends State<PlayerRoom> {
         IconButton(
           icon: Icon(Icons.exit_to_app , color: Colors.grey[50]),
           onPressed: () {
-            DataBase.deletePlayer(widget.player);
+            
+            if(DataBase.getPlayers(widget.roomId).length == 0){
+              // NÃO TO CONSEGUINDO PEGAR O NÚMERO DE JOGADORES DA SALA
+              DataBase.deletePlayer(widget.player);
+              // MÉTODO PARA EXCLUIR SALA QUANDO ESTÁ TUDO VAZIO
+              // DataBase.deleteRoom(widget.roomId);
+              print('Nenhum jogador na sala ----- SALA DELETADA');
+            }else {
+              DataBase.deletePlayer(widget.player);
+              print('Não é o último jogador');
+              print('Número de jogadores na sala => ${DataBase.getPlayers(widget.roomId) }');
+            }
             Navigator.pushNamed(context, '/home');
           },
         )

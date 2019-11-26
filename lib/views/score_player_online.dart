@@ -15,15 +15,18 @@ class ScorePlayerOnline extends StatefulWidget {
 
   @override
   _ScorePlayerOnlineState createState() => _ScorePlayerOnlineState();
+  
 }
 
 
 class _ScorePlayerOnlineState extends State<ScorePlayerOnline> {
 
 
+
   _somaValores(level, forca) {
     return level + forca;
   }
+  
 
   void _lancarDado({String title, String message, Function confirm}){
     showDialog(
@@ -80,6 +83,9 @@ class _ScorePlayerOnlineState extends State<ScorePlayerOnline> {
   }
 
   Widget _scorePanel() {
+    
+    widget.player.roomId = widget.roomId;
+
     return Container(
       child: Container(
         margin: const EdgeInsets.only(left: 0.0, right: 0.0, top: 0.0),
@@ -103,6 +109,7 @@ class _ScorePlayerOnlineState extends State<ScorePlayerOnline> {
                         setState(() {
                           widget.player.sexo = (widget.player.sexo == 'F')? 'M' : 'F';
                           print('o sexo do player alterou para: ${widget.player.sexo}');
+                          DataBase.updatePlayer(widget.player);
                         });
                       },
                     ),
@@ -167,9 +174,18 @@ class _ScorePlayerOnlineState extends State<ScorePlayerOnline> {
                   icon: Icon(Icons.remove),
                   onPressed: () {
                     setState(() {
-                      if((widget.player.level > 1) && (widget.player.forca > 0)){
-                        nomeCampo == "level" ? widget.player.level -= 1 : widget.player.forca -= 1;
-                      }
+                      // if((widget.player.level > 1) || (widget.player.forca > 0)){
+                      //   nomeCampo == "level" ? widget.player.level -= 1 : widget.player.forca -= 1;
+                      //   DataBase.updatePlayer(widget.player);
+                      // }
+                      nomeCampo == "level" ? (widget.player.level > 1)?{
+                        widget.player.level -= 1,
+                        DataBase.updatePlayer(widget.player)
+                      }: ''
+                      : (widget.player.forca > 0)?{
+                        widget.player.forca -= 1,
+                        DataBase.updatePlayer(widget.player)
+                      }: '';
                     });
                   },
                 ),

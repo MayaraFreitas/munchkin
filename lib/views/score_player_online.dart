@@ -1,16 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:munchkin/models/dados_mocados.dart';
 import 'package:munchkin/models/lancar_dado.dart';
+import 'package:munchkin/models/Player.dart';
+import 'package:munchkin/services/data_base.dart';
+import 'package:munchkin/views/player_room.dart';
 
 
-class ScorePage extends StatefulWidget {
+class ScorePlayerOnline extends StatefulWidget {
+
+  final String roomId;
+  final Player player;
+
+  const ScorePlayerOnline({Key key, this.roomId, this.player}) : super(key: key);
+
   @override
-  _ScorePageState createState() => _ScorePageState();
+  _ScorePlayerOnlineState createState() => _ScorePlayerOnlineState();
+  
 }
 
-Jogador jogador = new Jogador("Jogador 1", "M", 1, 0, 3);
 
-class _ScorePageState extends State<ScorePage> {
+class _ScorePlayerOnlineState extends State<ScorePlayerOnline> {
+
+
+
+  _somaValores(level, forca) {
+    return level + forca;
+  }
+  
 
   void _lancarDado({String title, String message, Function confirm}){
     showDialog(
@@ -67,6 +83,9 @@ class _ScorePageState extends State<ScorePage> {
   }
 
   Widget _scorePanel() {
+    
+    widget.player.roomId = widget.roomId;
+
     return Container(
       child: Container(
         margin: const EdgeInsets.only(left: 0.0, right: 0.0, top: 0.0),
@@ -75,19 +94,22 @@ class _ScorePageState extends State<ScorePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(jogador.getScoreTotal(jogador).toString(), style: TextStyle(fontSize: 90.0, letterSpacing: 12.0, color: Colors.grey[50])),
+                Text(_somaValores(widget.player.level, widget.player.forca).toString(), style: TextStyle(fontSize: 90.0, letterSpacing: 12.0, color: Colors.grey[50])),
                 Text("Força total", style: TextStyle(color: Colors.grey[50])),
                 Container(
                     margin: EdgeInsets.only(top: 20.0),
                     child: FlatButton(
                       onPressed: () {
                         /*DEVE IR PARA PÁGINA DA MESA*/
+                        
                       },
                       child: IconButton(
-                      icon: Icon(jogador.sexo == "F" ? Icons.person : Icons.person_outline, color: Colors.grey[50]),
+                      icon: Icon(widget.player.sexo == "F" ? Icons.person : Icons.person_outline, color: Colors.grey[50]),
                       onPressed: () {
                         setState(() {
-                          jogador.setSexo(jogador); 
+                          widget.player.sexo = (widget.player.sexo == 'F')? 'M' : 'F';
+                          print('o sexo do player alterou para: ${widget.player.sexo}');
+                          DataBase.updatePlayer(widget.player);
                         });
                       },
                     ),
@@ -98,8 +120,14 @@ class _ScorePageState extends State<ScorePage> {
                     child: FlatButton(
                       onPressed: () {
                         /*DEVE IR PARA PÁGINA DA MESA*/
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PlayerRoom(roomId: widget.roomId, player: widget.player,),
+                          ),
+                        );
                       },
-                      child: Text(jogador.getPosicao(jogador) + "º POSIÇÃO",)
+                      child: Text("Ver mesa",)
                   ),
                 )
               ],    
@@ -114,7 +142,7 @@ class _ScorePageState extends State<ScorePage> {
 
 
 
-  Widget _scorePage(){
+  Widget _ScorePlayerOnline(){
     return Column(
       children: <Widget>[
         _scorePanel(),
@@ -146,9 +174,18 @@ class _ScorePageState extends State<ScorePage> {
                   icon: Icon(Icons.remove),
                   onPressed: () {
                     setState(() {
-                      if((jogador.level > 1) && (jogador.forca > 0)){
-                        nomeCampo == "level" ? jogador.level = jogador.removeLevel(jogador) : jogador.forca = jogador.removeForca(jogador);
-                      }
+                      // if((widget.player.level > 1) || (widget.player.forca > 0)){
+                      //   nomeCampo == "level" ? widget.player.level -= 1 : widget.player.forca -= 1;
+                      //   DataBase.updatePlayer(widget.player);
+                      // }
+                      nomeCampo == "level" ? (widget.player.level > 1)?{
+                        widget.player.level -= 1,
+                        DataBase.updatePlayer(widget.player)
+                      }: ''
+                      : (widget.player.forca > 0)?{
+                        widget.player.forca -= 1,
+                        DataBase.updatePlayer(widget.player)
+                      }: '';
                     });
                   },
                 ),
@@ -157,10 +194,13 @@ class _ScorePageState extends State<ScorePage> {
                 icon: Icon(Icons.add, color: Colors.greenAccent[400]),
                 onPressed: () {
                   setState(() {
-                    if(jogador.level < 10){
-                      nomeCampo == "level" ? jogador.level = jogador.addLevel(jogador) : jogador.forca = jogador.addForca(jogador);
+                    if(widget.player.level < 10){
+                      nomeCampo == "level" ? widget.player.level += 1 : widget.player.forca += 1;
+                      DataBase.updatePlayer(widget.player);
+                      // name: widget.player.name, sexo: widget.player.sexo, level: widget.player.level, level: widget.player.forca
+                      print(widget.player);
                     }
-                    if(jogador.level >= 10){
+                    if(widget.player.level >= 10){
                       _showDialog(
                         title: 'Fim de jogo',
                         message: "Você atingiu o level 10",
@@ -170,7 +210,7 @@ class _ScorePageState extends State<ScorePage> {
                         },
                         cancel: () {
                           setState(() {
-                            jogador.level = jogador.removeLevel(jogador);
+                            // player.level = player.removeLevel(player);
                           });
                         }
                       );
@@ -188,9 +228,9 @@ class _ScorePageState extends State<ScorePage> {
   Widget _scoreActionList(){
     return Column(
       children: <Widget>[
-        _scoreActionListItem(jogador.level, "Level", "level"),
+        _scoreActionListItem(widget.player.level, "Level", "level"),
         Divider(),
-        _scoreActionListItem(jogador.forca, "Força", "forca")
+        _scoreActionListItem(widget.player.forca, "Força", "forca")
       ],
     );
   }
@@ -203,7 +243,7 @@ class _ScorePageState extends State<ScorePage> {
       appBar: AppBar(
         title: Row(
           children: <Widget>[
-            Text("Jogo off-line"),
+            Text(widget.player.name),
           ] 
         ),
         actions: <Widget>[
@@ -218,7 +258,7 @@ class _ScorePageState extends State<ScorePage> {
         )
       ],
       ),
-      body: SingleChildScrollView(child:  _scorePage(),), // This trailing comma makes auto-formatting nicer for build methods.
+      body: SingleChildScrollView(child:  _ScorePlayerOnline(),), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

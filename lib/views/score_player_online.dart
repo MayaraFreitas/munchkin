@@ -118,6 +118,7 @@ class _ScorePlayerOnlineState extends State<ScorePlayerOnline> {
                 Container(
                     margin: EdgeInsets.only(top: 30.0),
                     child: FlatButton(
+                      color: Colors.greenAccent[400],
                       onPressed: () {
                         /*DEVE IR PARA PÁGINA DA MESA*/
                         Navigator.push(
@@ -127,13 +128,12 @@ class _ScorePlayerOnlineState extends State<ScorePlayerOnline> {
                           ),
                         );
                       },
-                      child: Text("Ver mesa",)
+                      child: Text("VER MESA",)
                   ),
                 )
               ],    
             )
         ),
-        color: Color(0xff2DBDB6),
         height: 300.0,
       ),
     );

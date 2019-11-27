@@ -117,7 +117,8 @@ class _HomePageState extends State<HomePage> {
                   _player.startPlayer(_nameController.text, nomeSala);
                   DataBase.createPlayer(_player); 
                   Navigator.of(context).pop();
-                  Navigator.push(
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => ScorePlayerOnline(roomId: nomeSala, player: new Player(name: _nameController.text, sexo: 'F', level: 1, forca: 0)),

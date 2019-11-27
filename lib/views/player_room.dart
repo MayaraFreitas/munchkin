@@ -36,7 +36,9 @@ class _PlayerRoomState extends State<PlayerRoom> {
                   print(
                       'Número de jogadores na sala => ${DataBase.getPlayers(widget.roomId)}');
                 }
-                Navigator.pushNamed(context, '/home');
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+                Navigator.pushReplacementNamed(context, '/home');
               });
             },
           )
@@ -109,10 +111,6 @@ class _PlayerRoomState extends State<PlayerRoom> {
 
   final leftSection = new Container(
     padding: new EdgeInsets.only(right: 25, left: 25, top: 30, bottom: 30),
-    child: new CircleAvatar(
-      backgroundColor: Colors.lightGreen,
-      radius: 32.0,
-    ),
   );
   middleSection(name) {
     return Container(
@@ -141,7 +139,7 @@ class _PlayerRoomState extends State<PlayerRoom> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             new Text(
-              "Level:" + level.toString(),
+              "Força total:" + (level + forca).toString(),
               style: new TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
@@ -149,7 +147,7 @@ class _PlayerRoomState extends State<PlayerRoom> {
               ),
             ),
             new Text(
-              "Força:" + forca.toString(),
+              "Level:" + level.toString(),
               style: new TextStyle(color: Colors.white),
             ),
           ],

@@ -1,9 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:munchkin/models/Player.dart';
-import 'package:munchkin/models/dados_mocados.dart';
-import 'package:munchkin/services/data_base.dart';
 
 class PaginaTeste extends StatefulWidget {
   final String roomId;

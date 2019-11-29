@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="https://portfolio-rodrigo-images.s3.us-east-2.amazonaws.com/print_github.png" weight="800"/>
+</p>
+
 # Contador de munchkin 
 Este aplicativo é um contador de pontos do jogo de tabuleiro munchkin e foi construído utilizando o framework Flutter e o banco de dados Firebase. Foi implementado salas onde que  é possível se conectar com jogadores ao seu redor, para obter informações dos adversários como nivel de força, level, sexo e também jogar o dado quando precisar.
 
